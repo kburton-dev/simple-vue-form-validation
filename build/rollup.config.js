@@ -1,14 +1,11 @@
 import commonjs from '@rollup/plugin-commonjs'; // Convert CommonJS modules to ES6
 import vue from 'rollup-plugin-vue'; // Handle .vue SFC files
-import buble from '@rollup/plugin-buble'; // Transpile/polyfill with reasonable browser support
+import babel from '@rollup/plugin-babel'; // Transpile/polyfill with reasonable browser support
 export default {
     input: 'src/wrapper.js', // Path relative to package.json
     output: {
         name: 'ValidatedForm',
         exports: 'named',
-    },
-    options: {
-        transforms: { asyncAwait: false, forOf: false },
     },
     plugins: [
         commonjs(),
@@ -16,6 +13,9 @@ export default {
             css: true, // Dynamically inject css as a <style> tag
             compileTemplate: true, // Explicitly convert template to render function
         }),
-        buble({ transforms: { asyncAwait: false, forOf: false } }), // Transpile to ES5
+        babel({
+            exclude: 'node_modules/**',
+            presets: ['@babel/preset-env']
+        }), // Transpile to ES5
     ],
 };

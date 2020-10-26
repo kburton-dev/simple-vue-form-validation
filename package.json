@@ -1,6 +1,12 @@
 {
 	"name": "simple-vue-form-validation",
-	"version": "1.0.0",
+	"description": "A simple way to implement form validation in vue",
+	"version": "1.0.1",
+	"author": "Kyle Burton",
+	"bugs": {
+		"url": "https://github.com/kburton-dev/simple-vue-form-validation/issues"
+	},
+	"homepage": "https://github.com/kburton-dev/simple-vue-form-validation#readme",
 	"main": "dist/simple-vue-form-validation.umd.js",
 	"module": "dist/simple-vue-form-validation.esm.js",
 	"unpkg": "dist/simple-vue-form-validation.min.js",
@@ -14,9 +20,11 @@
 		"build:unpkg": "rollup --config build/rollup.config.js --format iife --file dist/simple-vue-form-validation.min.js"
 	},
 	"devDependencies": {
-		"rollup": "^1.17.0",
-		"@rollup/plugin-buble": "^0.21.3",
+		"@babel/core": "^7.3.3",
+		"@babel/preset-env": "^7.12.1",
+		"@rollup/plugin-babel": "^5.2.1",
 		"@rollup/plugin-commonjs": "^11.1.0",
+		"rollup": "^1.17.0",
 		"rollup-plugin-vue": "^5.0.1",
 		"vue": "^2.6.12",
 		"vue-template-compiler": "^2.6.10"
