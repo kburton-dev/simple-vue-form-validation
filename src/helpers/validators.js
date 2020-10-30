@@ -1,8 +1,15 @@
+const getStringValue = value => {
+	return value === null ? '' : value.toString();
+}
+const getNumberValue = value => {
+	return +value;
+}
+
 const validators = [
 	{
 		name: 'required',
 		rule: (value, ruleValue) => {
-			if (!ruleValue || (`${value === null ? '' : value}`.length > 0))
+			if (!ruleValue || getStringValue(value).length > 0)
 				return true;
 			return 'This field is required';
 		}
@@ -10,7 +17,7 @@ const validators = [
 	{
 		name: 'minlength',
 		rule: (value, ruleValue) => {
-			if (value.length >= ruleValue) {
+			if (getStringValue(value).length >= ruleValue) {
 				return true;
 			}
 			return `Needs to be longer than ${ruleValue} characters`;
@@ -19,7 +26,7 @@ const validators = [
 	{
 		name: 'maxlength',
 		rule: (value, ruleValue) => {
-			if (value.length <= ruleValue) {
+			if (getStringValue(value).length <= ruleValue) {
 				return true;
 			}
 			return `Cannot be longer than ${ruleValue} characters`;
@@ -28,23 +35,17 @@ const validators = [
 	{
 		name: 'pattern',
 		rule: (value, ruleValue) => {
-			let valid;
-			switch (ruleValue) {
-				case 'email':
-					valid = value.match(/\S{2,}\@\S{2,}\.\S{2,}/);
-					break;
-				default:
-					console.log(`Unsupported validation pattern ${ruleValue}`);
-					return;
-			}
+			let valid = getStringValue(value).match(ruleValue);
 
-			return valid || `This value does not match the ${ruleValue} pattern`;
+			return valid || `This value does not match the expected pattern`;
 		}
 	},
 	{
 		name: 'min',
 		rule: (value, ruleValue) => {
-			if (value >= ruleValue) {
+			if (isNaN(value)) return "Please provide a valid numeric value";
+
+			if (getNumberValue(value) >= ruleValue) {
 				return true;
 			}
 			return `Needs to be greater than ${ruleValue}`;
@@ -53,7 +54,9 @@ const validators = [
 	{
 		name: 'max',
 		rule: (value, ruleValue) => {
-			if (value <= ruleValue) {
+			if (isNaN(value)) return "Please provide a valid numeric value";
+
+			if (getNumberValue(value) <= ruleValue) {
 				return true;
 			}
 			return `Needs to be less than ${ruleValue}`;

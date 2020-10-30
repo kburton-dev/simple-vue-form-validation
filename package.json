@@ -1,7 +1,7 @@
 {
 	"name": "simple-vue-form-validation",
 	"description": "A simple way to implement form validation in vue",
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"author": "Kyle Burton",
 	"bugs": {
 		"url": "https://github.com/kburton-dev/simple-vue-form-validation/issues"

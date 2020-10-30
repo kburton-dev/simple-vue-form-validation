@@ -343,16 +343,24 @@ __vue_render__._withStripped = true;
     undefined
   );
 
+var getStringValue = function getStringValue(value) {
+  return value === null ? '' : value.toString();
+};
+
+var getNumberValue = function getNumberValue(value) {
+  return +value;
+};
+
 var validators = [{
   name: 'required',
   rule: function rule(value, ruleValue) {
-    if (!ruleValue || "".concat(value === null ? '' : value).length > 0) return true;
+    if (!ruleValue || getStringValue(value).length > 0) return true;
     return 'This field is required';
   }
 }, {
   name: 'minlength',
   rule: function rule(value, ruleValue) {
-    if (value.length >= ruleValue) {
+    if (getStringValue(value).length >= ruleValue) {
       return true;
     }
 
@@ -361,7 +369,7 @@ var validators = [{
 }, {
   name: 'maxlength',
   rule: function rule(value, ruleValue) {
-    if (value.length <= ruleValue) {
+    if (getStringValue(value).length <= ruleValue) {
       return true;
     }
 
@@ -370,24 +378,15 @@ var validators = [{
 }, {
   name: 'pattern',
   rule: function rule(value, ruleValue) {
-    var valid;
-
-    switch (ruleValue) {
-      case 'email':
-        valid = value.match(/\S{2,}\@\S{2,}\.\S{2,}/);
-        break;
-
-      default:
-        console.log("Unsupported validation pattern ".concat(ruleValue));
-        return;
-    }
-
-    return valid || "This value does not match the ".concat(ruleValue, " pattern");
+    var valid = getStringValue(value).match(ruleValue);
+    return valid || "This value does not match the expected pattern";
   }
 }, {
   name: 'min',
   rule: function rule(value, ruleValue) {
-    if (value >= ruleValue) {
+    if (isNaN(value)) return "Please provide a valid numeric value";
+
+    if (getNumberValue(value) >= ruleValue) {
       return true;
     }
 
@@ -396,7 +395,9 @@ var validators = [{
 }, {
   name: 'max',
   rule: function rule(value, ruleValue) {
-    if (value <= ruleValue) {
+    if (isNaN(value)) return "Please provide a valid numeric value";
+
+    if (getNumberValue(value) <= ruleValue) {
       return true;
     }
 
