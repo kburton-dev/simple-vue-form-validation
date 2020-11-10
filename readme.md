@@ -72,3 +72,7 @@ RegisterValidator('yourRuleName', (value, ruleValue) => {
 * pattern
 * min
 * max
+
+## Sample
+
+![Validation in action](https://raw.githubusercontent.com/kburton-dev/simple-vue-form-validation/master/sample.gif)
